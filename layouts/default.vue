@@ -4,7 +4,7 @@
 <template>
   <div class="linear-bg">
     <div class="p-3 max-w-[1200px] mx-auto">
-      <nuxt-img src="/images/logo.png" class="max-w-[120px]" />
+      <img src="/images/logo.png" class="max-w-[120px]" />
     </div>
 
     <slot />

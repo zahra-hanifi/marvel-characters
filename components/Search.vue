@@ -10,7 +10,7 @@
       />
 
       <button class="bg-[#DC2626] rounded px-4 text-white text-sm font-medium flex items-center gap-x-2">
-        <nuxt-img src="/images/search.png" class="min-w-[14px] w-full" />
+        <img src="/images/search.png" class="min-w-[14px] w-full" />
 
         <span class="hidden sm:block">Search</span>
       </button>

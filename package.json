@@ -12,6 +12,8 @@
   "dependencies": {
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "dotenv": "^16.4.5",
+    "md5": "^2.3.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"

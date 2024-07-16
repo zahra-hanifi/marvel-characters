@@ -10,7 +10,7 @@ export const getMarvelAuthParams = () => {
 
     return {
         ts,
-        apikey: config.public.marvelPublicKey,
+        apikey: publicKey,
         hash
     }
 }

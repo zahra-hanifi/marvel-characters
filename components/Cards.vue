@@ -17,6 +17,7 @@ defineProps({
         >
             <nuxt-img
               :src="`${item.thumbnail.path}.${item.thumbnail.extension}`"
+              :srcset="`${item.thumbnail.path}.${item.thumbnail.extension}`"
               class="rounded-lg min-h-[330px]"
             />
 

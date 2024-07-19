@@ -16,8 +16,7 @@ defineProps({
           class="flex flex-col gap-y-4 items-center p-3 h-full"
         >
             <nuxt-img
-              :src="`${item.thumbnail.path}.${item.thumbnail.extension}`"
-              :srcset="`${item.thumbnail.path}.${item.thumbnail.extension}`"
+              :src="`${item.thumbnail.path.replace('http', 'https')}.${item.thumbnail.extension}`"
               class="rounded-lg min-h-[330px]"
             />
 

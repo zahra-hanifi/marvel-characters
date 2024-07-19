@@ -52,7 +52,7 @@ function selectPage(page) {
 </script>
 
 <template>
-  <div class="flex justify-center gap-x-1 p-3">
+  <div class="flex justify-center items-center gap-x-1 p-3">
       <button
         v-for="(item, index) in itemsToDisplay"
         :key="index"

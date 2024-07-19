@@ -4,6 +4,7 @@ import { config } from 'dotenv'
 
 config()
 export default defineNuxtConfig({
+  ssr: true,
   devtools: { enabled: false },
   modules: ['@nuxt/image', '@nuxtjs/tailwindcss'],
   image: {

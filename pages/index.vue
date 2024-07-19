@@ -49,7 +49,7 @@ watch(page, async () => {
     <Search />
 
     <div class="max-w-[1200px] mx-auto py-8 px-3">
-        <div v-if="loading || !characters" class="flex flex-wrap">
+        <div v-if="loading || !characters?.value" class="flex flex-wrap">
             <Skeleton />
         </div>
 

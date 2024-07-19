@@ -2,18 +2,20 @@
 import {getMarvelAuthParams} from '~/utils/marvel'
 import {ref, onBeforeMount, watch} from 'vue'
 import Skeleton from "~/components/Skeleton.vue";
+import { useRuntimeConfig } from '#imports'
 
 const page = ref(1)
 const itemsPerPage = ref(12)
 const {ts, apikey, hash} = getMarvelAuthParams()
 const characters = ref(null)
 const loading = ref(false)
+const config = useRuntimeConfig()
 
 async function fetchData() {
     loading.value = true
 
     try {
-        const response = await useFetch(`https://gateway.marvel.com/v1/public/characters`, {
+        const response = await $fetch(`${config.public.baseURL}/characters`, {
             params: {
                 ts,
                 apikey,
@@ -46,20 +48,20 @@ watch(page, async () => {
 
 <template>
     <div class="bg-[#2c2e30] min-h-screen pb-10">
-        <Search/>
+        <Search />
 
         <div class="max-w-[1200px] mx-auto py-8 px-3">
-            <div v-if="loading || !characters?.value" class="flex flex-wrap">
+            <div v-if="loading || !characters?.results.length" class="flex flex-wrap">
                 <Skeleton/>
             </div>
 
             <template v-else>
-                <Cards :data="characters.value.data.results"/>
+                <Cards :items="characters.results"/>
 
                 <Pagination
-                        v-model="page"
-                        :total="characters.value.data.total"
-                        :items-per-page="itemsPerPage"
+                    v-model="page"
+                    :total="characters.total"
+                    :items-per-page="itemsPerPage"
                 />
             </template>
         </div>

@@ -7,7 +7,7 @@ const page = ref(1)
 const itemsPerPage = ref(12)
 const {ts, apikey, hash} = getMarvelAuthParams()
 const characters = ref(null)
-const loading = ref(false)
+const loading = ref(true)
 const config = useRuntimeConfig()
 const searchTerm = ref('')
 
@@ -38,11 +38,13 @@ async function fetchData() {
 }
 
 onBeforeMount(async () => {
-    const data = await fetchData()
-    if (data) {
-        characters.value = data
-    } else {
-        console.error('No data found or incorrect data format:', data)
+    if (!characters.value) {
+        const data = await fetchData()
+        if (data) {
+            characters.value = data
+        } else {
+            console.error('No data found or incorrect data format:', data)
+        }
     }
 })
 

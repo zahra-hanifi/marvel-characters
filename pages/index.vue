@@ -37,16 +37,14 @@ async function fetchData() {
     }
 }
 
-onBeforeMount(async () => {
-    if (!characters.value) {
-        const data = await fetchData()
-        if (data) {
-            characters.value = data
-        } else {
-            console.error('No data found or incorrect data format:', data)
-        }
-    }
-})
+if (!characters.value) {
+  const data = await fetchData()
+  if (data) {
+    characters.value = data
+  } else {
+    console.error('No data found or incorrect data format:', data)
+  }
+}
 
 watch(page, async () => {
     characters.value = await fetchData()

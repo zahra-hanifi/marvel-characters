@@ -1,50 +1,50 @@
 <script setup>
 import { fetchMarvel } from '~/utils/marvel'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const page = ref(1)
 const itemsPerPage = ref(12)
-const characters = ref(null)
-const loading = ref(true)
 const searchTerm = ref('')
 
-async function fetchData() {
-    loading.value = true
+// useAsyncData serialises the server-rendered result into the payload, so the
+// client reuses it on hydration instead of fetching the same page a second
+// time. `page` is watched so pagination refetches on its own; `searchTerm` is
+// deliberately not watched, because search is submitted explicitly rather than
+// firing on every keystroke.
+const { data: characters, pending: loading, refresh } = await useAsyncData(
+    'characters',
+    async () => {
+        const params = {
+            offset: (page.value - 1) * itemsPerPage.value,
+            limit: itemsPerPage.value,
+        }
+        if (searchTerm.value) {
+            params.name = searchTerm.value
+        }
 
-    let params = {
-        offset: (page.value - 1) * itemsPerPage.value,
-        limit: itemsPerPage.value,
-    }
-    if (searchTerm.value) {
-        params = {...params, name: searchTerm.value}
-    }
-
-    try {
-        const response = await fetchMarvel('characters', params)
-        loading.value = false
-        return response.data
-    } catch (error) {
-        loading.value = false
-        return null
-    }
-}
-
-if (!characters.value) {
-  const data = await fetchData()
-  if (data) {
-    characters.value = data
-  } else {
-    console.error('No data found or incorrect data format:', data)
-  }
-}
-
-watch(page, async () => {
-    characters.value = await fetchData()
-})
+        try {
+            const response = await fetchMarvel('characters', params)
+            return response.data
+        } catch (error) {
+            console.error('No data found or incorrect data format:', error)
+            return null
+        }
+    },
+    { watch: [page] }
+)
 
 async function search() {
-    if (!searchTerm.value) return
-    characters.value = await fetchData()
+    // An empty term is a valid search: it drops the `name` filter and restores
+    // the full list. Either way reset to the first page, because Marvel applies
+    // `offset` to the filtered result set and a stale offset can skip past the
+    // only match. Changing `page` already refetches via `watch`, so return
+    // early there to avoid fetching twice.
+    if (page.value !== 1) {
+        page.value = 1
+        return
+    }
+
+    await refresh()
 }
 </script>
 

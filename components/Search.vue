@@ -1,5 +1,9 @@
 <script setup>
 const model = defineModel()
+
+// Declared so Vue treats `search` as an emitted event rather than letting an
+// `onSearch` listener fall through onto the root element.
+defineEmits(['search'])
 </script>
 
 <template>
@@ -9,6 +13,7 @@ const model = defineModel()
           v-model="model"
           class="bg-[#3B3D3F] flex-grow p-3 rounded text-white text-sm outline-none"
           placeholder="Search for characters..."
+          @keyup.enter="$emit('search')"
       />
 
       <button

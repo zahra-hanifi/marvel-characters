@@ -47,6 +47,9 @@ const itemsToDisplay = computed(() => {
 })
 
 function selectPage(page) {
+    // Ellipsis entries are rendered as empty strings. Without this guard a click
+    // sets the page to '', which becomes offset=-12 and breaks the whole list.
+    if (!page) return
     model.value = page
 }
 </script>

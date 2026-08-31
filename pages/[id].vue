@@ -1,41 +1,21 @@
 <script setup>
 import { useAsyncData } from '#app'
-import {getMarvelAuthParams, useRuntimeConfig} from '#imports'
-const {ts, apikey, hash} = getMarvelAuthParams()
+import { fetchMarvel } from '~/utils/marvel'
 
-const config = useRuntimeConfig()
 const route = useRoute()
 
 const { data: characterData } = useAsyncData('characterData', async () => {
-    const response = await $fetch(`${config.public.baseURL}/characters/${route.params.id}`, {
-        params: {
-            ts,
-            apikey,
-            hash,
-        }
-    })
+    const response = await fetchMarvel(`characters/${route.params.id}`)
     return response.data.results[0]
 })
 
 const { data: comicsData } = useAsyncData('comicsData', async () => {
-    const response = await $fetch(`${config.public.baseURL}/characters/${route.params.id}/comics`, {
-        params: {
-            ts,
-            apikey,
-            hash,
-        }
-    })
+    const response = await fetchMarvel(`characters/${route.params.id}/comics`)
     return response.data.results
 })
 
 const { data: seriesData } = useAsyncData('seriesData', async () => {
-    const response = await $fetch(`${config.public.baseURL}/characters/${route.params.id}/series`, {
-        params: {
-            ts,
-            apikey,
-            hash,
-        }
-    })
+    const response = await fetchMarvel(`characters/${route.params.id}/series`)
     return response.data.results
 })
 </script>

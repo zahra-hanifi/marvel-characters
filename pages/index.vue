@@ -1,23 +1,17 @@
 <script setup>
-import { getMarvelAuthParams } from '~/utils/marvel'
-import { ref, onBeforeMount, watch } from 'vue'
-import { useRuntimeConfig } from '#imports'
+import { fetchMarvel } from '~/utils/marvel'
+import { ref, watch } from 'vue'
 
 const page = ref(1)
 const itemsPerPage = ref(12)
-const {ts, apikey, hash} = getMarvelAuthParams()
 const characters = ref(null)
 const loading = ref(true)
-const config = useRuntimeConfig()
 const searchTerm = ref('')
 
 async function fetchData() {
     loading.value = true
 
     let params = {
-        ts,
-        apikey,
-        hash,
         offset: (page.value - 1) * itemsPerPage.value,
         limit: itemsPerPage.value,
     }
@@ -26,9 +20,7 @@ async function fetchData() {
     }
 
     try {
-        const response = await $fetch(`${config.public.baseURL}/characters`, {
-            params: params
-        })
+        const response = await fetchMarvel('characters', params)
         loading.value = false
         return response.data
     } catch (error) {

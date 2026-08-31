@@ -2,7 +2,7 @@
 
 Browse and search Marvel's character catalogue. Built with Nuxt 3 and Tailwind CSS, using the public Marvel Comics API.
 
-**[Live demo →](https://marvel-characters-omega.vercel.app//)**
+**[Live demo →](https://marvel-characters-omega.vercel.app/)**
 
 ---
 
